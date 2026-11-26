@@ -5,3 +5,5 @@ RELEASE_NOTES.md
 .DS_Store
 Thumbs.db
 knowledge/
+.claude/
+CLAUDE.md

@@ -87,7 +87,7 @@ npx skills add Undec0de/Irreplaceable-Handoff
 
 ### Always-on / proactive cloud agents
 - **Perplexity Computer:** Open **Plugins** → **Add custom** → **Upload plugin or Skill** and upload `SKILL.md` once so it stays available globally across all sessions and Projects.
-- **Claude Duet:** Add `SKILL.md` to your **Claude.ai** account skills (Duet reads skills and connectors from Claude.ai, not from local Claude Code directories).
+- **Claude Duet:** If supported by your setup, add `SKILL.md` to your **Claude.ai** account skills, which Duet is reported to share.
 - **OpenAI Dots:** If supported by your setup, attach `SKILL.md` to your Dots agent instructions/knowledge or invoke it as a reusable routine.
 - **Grok Bot:** Save the workflow in your Grok Bot instructions or Chief of Staff routine so specialist bots hand off state consistently.
 - **Meta Muse:** If supported by your setup, paste the skill instructions into your agent preferences/routines.
