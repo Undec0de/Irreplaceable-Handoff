@@ -34,7 +34,7 @@ Irreplaceable-Handoff/
 
 ## Security & trust
 
-- **Zero executable code or external fetches:** This skill consists solely of `SKILL.md` with no bundled scripts and no runtime URL fetches—you can audit the entire file in under two minutes and it passes automated skill scanners cleanly.
+- **Zero executable code or external fetches:** This skill consists solely of `SKILL.md` with no bundled scripts and no runtime URL fetches—you can audit the entire file in under two minutes.
 - **Explicit `Security boundary`:** All security constraints live in a dedicated section inside `SKILL.md` covering read-only inspection, workspace-scoped sanitized `[a-z0-9-]` writes, secret/PII redaction, and indirect prompt-injection defense.
 - **Read-only inspection:** Any state verification during handoff generation is strictly read-only; the skill never stops processes, modifies Git history, or runs destructive commands.
 - **Review shared handoffs:** Always review generated handoffs before sharing or committing them, and inspect any handoff created by someone else before passing it to an agent.
@@ -90,14 +90,14 @@ npx skills add Undec0de/Irreplaceable-Handoff
 - **Claude Duet:** Add `SKILL.md` to your **Claude.ai** account skills (Duet reads skills and connectors from Claude.ai, not from local Claude Code directories).
 - **OpenAI Dots:** Attach `SKILL.md` to your Dots agent instructions/knowledge or invoke it as a reusable routine.
 - **Grok Bot:** Save the workflow in your Grok Bot instructions or Chief of Staff routine so specialist bots hand off state consistently.
-- **Meta Muse:** Paste or attach the skill instructions in your agent preferences/routines.
+- **Meta Muse:** If supported by your setup, paste the skill instructions into your agent preferences/routines.
 
 ### Stateless web chats (Claude.ai, ChatGPT, Perplexity, Gemini)
 - Attach `SKILL.md` to a **Project** (Claude, Perplexity) or **Custom GPT / Gem**. Without local disk access, the skill outputs a clean, copy-ready Markdown block.
 
 ## Optional automation (platform recipes)
 
-`SKILL.md` intentionally ships with **zero hooks or executable scripts** so it stays portable and passes strict security scans. If you want automatic reminders on your favorite platform, you can opt in using the lightweight recipes below:
+`SKILL.md` intentionally ships with **zero hooks or executable scripts** so it stays portable. If you want automatic reminders on your favorite platform, you can opt in using the lightweight recipes below:
 
 ### Claude Code (`~/.claude/settings.json`)
 Add a zero-script `PreCompact` hook (whose stdout guides compaction to preserve handoff fields) and a `SessionStart` reminder after compaction:
