@@ -79,16 +79,16 @@ npx skills add Undec0de/Irreplaceable-Handoff
   ```bash
   hermes skills install https://raw.githubusercontent.com/Undec0de/Irreplaceable-Handoff/main/skills/irreplaceable-handoff/SKILL.md
   ```
-- **Codex CLI / OpenClaw:** Copy `skills/irreplaceable-handoff/SKILL.md` to `~/.agents/skills/irreplaceable-handoff/SKILL.md` (or `~/.codex/skills/irreplaceable-handoff/SKILL.md`).
+- **Codex CLI / OpenClaw:** Copy `skills/irreplaceable-handoff/SKILL.md` to `~/.agents/skills/irreplaceable-handoff/SKILL.md`.
 - **Gemini CLI:** Copy `skills/irreplaceable-handoff/SKILL.md` to `~/.gemini/skills/irreplaceable-handoff/SKILL.md` (or `.gemini/skills/irreplaceable-handoff/SKILL.md`).
 
 ### IDE agents (Cursor, Windsurf, VS Code / Copilot)
-- Place `skills/irreplaceable-handoff/SKILL.md` in `.agents/skills/irreplaceable-handoff/SKILL.md` (or `.github/skills/irreplaceable-handoff/SKILL.md` for GitHub Copilot), or import it as a rule file (e.g., `.cursor/rules/irreplaceable-handoff.mdc`).
+- Place `skills/irreplaceable-handoff/SKILL.md` in `.agents/skills/irreplaceable-handoff/SKILL.md` (or `.github/skills/irreplaceable-handoff/SKILL.md` for GitHub Copilot).
 
 ### Always-on / proactive cloud agents
 - **Perplexity Computer:** Open **Plugins** → **Add custom** → **Upload plugin or Skill** and upload `SKILL.md` once so it stays available globally across all sessions and Projects.
 - **Claude Duet:** Add `SKILL.md` to your **Claude.ai** account skills (Duet reads skills and connectors from Claude.ai, not from local Claude Code directories).
-- **OpenAI Dots:** Attach `SKILL.md` to your Dots agent instructions/knowledge or invoke it as a reusable routine.
+- **OpenAI Dots:** If supported by your setup, attach `SKILL.md` to your Dots agent instructions/knowledge or invoke it as a reusable routine.
 - **Grok Bot:** Save the workflow in your Grok Bot instructions or Chief of Staff routine so specialist bots hand off state consistently.
 - **Meta Muse:** If supported by your setup, paste the skill instructions into your agent preferences/routines.
 
