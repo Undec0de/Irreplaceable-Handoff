@@ -1,0 +1,6 @@
+*-handoff-*.md
+!examples/*-handoff-*.md
+HANDOFF.md
+RELEASE_NOTES.md
+.DS_Store
+Thumbs.db
