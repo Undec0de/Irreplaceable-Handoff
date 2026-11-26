@@ -28,14 +28,14 @@ Irreplaceable-Handoff/
 - **Verified vs. unconfirmed state:** Explicitly tags completed work and key facts as `[verified]` or `[unconfirmed]` and surfaces conflicting facts instead of guessing.
 - **Dead-end tracking:** Records failed approaches and discovered constraints so the incoming agent does not repeat them.
 - **Ordered next actions + instant resume line:** Pairs a single `Start here` step with an optional short ordered queue (`Then`), and prints a copy-ready one-line resume prompt with the exact saved path at the end of the chat reply.
-- **Dated, PKM- and dreaming-friendly filenames:** Prints the handoff in chat and saves it as `YYYY-MM-DD-handoff-<short-slug>.md` (e.g., `2026-11-25-handoff-auth-refactor.md`) when filesystem access is available—ideal for Obsidian vaults, chronological archives, and downstream memory consolidation workflows.
+- **Dated, PKM- and dreaming-friendly filenames:** Prints the handoff in chat and saves it as `handoffs/YYYY-MM-DD-handoff-<short-slug>.md` (e.g., `handoffs/2026-11-25-handoff-auth-refactor.md`) in a self-ignoring folder when filesystem access is available—ideal for Obsidian vaults, chronological archives, and downstream memory consolidation workflows.
 - **Security-hardened by default:** Pure Markdown with a dedicated `Security boundary` section (zero scripts, zero network fetches, read-only checks, secret/PII redaction, workspace-scoped writes, and indirect prompt-injection defense).
 - **Multilingual output:** Automatically matches the primary language of the conversation while preserving paths, commands, URLs, and identifiers verbatim.
 
 ## Security & trust
 
 - **Zero executable code or external fetches:** This skill consists solely of `SKILL.md` with no bundled scripts and no runtime URL fetches—you can audit the entire file in under two minutes.
-- **Explicit `Security boundary`:** All security constraints live in a dedicated section inside `SKILL.md` covering read-only inspection, workspace-scoped sanitized `[a-z0-9-]` writes, secret/PII redaction, and indirect prompt-injection defense.
+- **Explicit `Security boundary`:** All security constraints live in a dedicated section inside `SKILL.md` covering read-only inspection, workspace-scoped sanitized `[a-z0-9-]` writes, a self-ignoring `handoffs/` folder, secret/PII redaction, and indirect prompt-injection defense.
 - **Read-only inspection:** Any state verification during handoff generation is strictly read-only; the skill never stops processes, modifies Git history, or runs destructive commands.
 - **Review shared handoffs:** Always review generated handoffs before sharing or committing them, and inspect any handoff created by someone else before passing it to an agent.
 
@@ -121,7 +121,7 @@ Add a zero-script `PreCompact` hook (whose stdout guides compaction to preserve 
         "hooks": [
           {
             "type": "command",
-            "command": "echo 'If a recent *-handoff-*.md file exists in this workspace, check its Next actions section.'"
+            "command": "echo 'If a recent handoffs/*-handoff-*.md file exists in this workspace, check its Next actions section.'"
           }
         ]
       }
@@ -134,7 +134,7 @@ Add a zero-script `PreCompact` hook (whose stdout guides compaction to preserve 
 Add two lines to your global or workspace instructions (`AGENTS.md` or `.cursor/rules/`):
 ```text
 - Before switching topics or ending a long multi-step chat, proactively offer to run the `irreplaceable-handoff` skill.
-- When starting a fresh chat in an existing workspace, check for the latest `*-handoff-*.md` file if the user asks to resume.
+- When starting a fresh chat in an existing workspace, check for the latest `handoffs/*-handoff-*.md` file (or your custom handoff folder) if the user asks to resume.
 ```
 
 ### Obsidian & PKM vaults
@@ -145,14 +145,29 @@ Create a lightweight end-of-day or end-of-task routine that invokes `irreplaceab
 
 ## Managing handoff files
 
+- **Default location:** `handoffs/` inside the current working directory.
 - **Default filename format:** `YYYY-MM-DD-handoff-<short-slug>.md` (lowercase ASCII kebab-case, e.g., `2026-11-25-handoff-auth-refactor.md`). If a file with the same name already exists, the agent appends `-2`, `-3`, etc. instead of overwriting your previous handoff.
-- **Avoid accidental Git commits:** Add these patterns to your project `.gitignore` or global ignore file (`git config --global core.excludesfile ~/.gitignore_global`):
+- **Excluded from Git by default:** when the folder has no `.gitignore`, the agent creates `handoffs/.gitignore` containing a single `*`. The folder then ignores itself, and your project's `.gitignore` stays untouched. An existing `handoffs/.gitignore` is never modified.
+
+### Changing the location
+
+- **One time:** name the path in your request (e.g., `wrap up and save to docs/handoff.md`).
+- **Always, for one project or globally:** add a line to your workspace or global instructions (`AGENTS.md`, `CLAUDE.md`, `.cursor/rules/`):
+  ```text
+  - Save session handoffs to `notes/handoffs/`.
+  ```
+- **Custom folders are not protected automatically.** Exclude yours from Git yourself, either with a `.gitignore` inside it containing `*`, or with patterns in the project or global ignore file (`git config --global core.excludesfile ~/.gitignore_global`):
   ```gitignore
   # Session handoff files
   *-handoff-*.md
   HANDOFF.md
-  !examples/*-handoff-*.md
   ```
+
+### Sharing handoffs on purpose
+
+To commit handoffs or sync them between machines, create `handoffs/.gitignore` yourself with only a comment (for example `# handoffs are tracked`); the agent leaves existing files alone. Review the content first.
+
+Git ignore rules do not affect files that are already tracked. To stop tracking one, run `git rm --cached <file>`.
 
 ## Resuming in a fresh session
 
@@ -160,16 +175,16 @@ At the end of every handoff, the agent prints a copy-ready one-line resume promp
 
 | Language | Resume from latest file (CLI / IDE) | Resume from pasted handoff (Web chat / Cloud agent) |
 | :--- | :--- | :--- |
-| English | `Read the latest *-handoff-*.md file and resume from "Next actions".` | `Here is the handoff from our previous session. Resume from "Next actions".` |
-| Italian | `Leggi il file *-handoff-*.md più recente e riparti da "Next actions".` | `Ecco l'handoff della sessione precedente. Riparti da "Next actions".` |
-| French | `Lis le fichier *-handoff-*.md le plus récent et reprends à partir de "Next actions".` | `Voici le handoff de la session précédente. Reprends à partir de "Next actions".` |
-| German | `Lies die neueste *-handoff-*.md-Datei und mache bei "Next actions" weiter.` | `Hier ist das Handoff aus der vorherigen Session. Mache bei "Next actions" weiter.` |
-| Spanish | `Lee el archivo *-handoff-*.md más reciente y retoma desde "Next actions".` | `Aquí tienes el handoff de la sesión anterior. Retoma desde "Next actions".` |
-| Portuguese | `Leia o arquivo *-handoff-*.md mais recente e retome a partir de "Next actions".` | `Aqui está o handoff da sessão anterior. Retome a partir de "Next actions".` |
-| Chinese (Simplified) | `读取最新的 *-handoff-*.md 文件，并从 "Next actions" 继续。` | `这是上次会话的交接总结，请从 "Next actions" 继续。` |
-| Japanese | `最新の *-handoff-*.md を読み込み、"Next actions" から再開してください。` | `前回のセッションのハンドオフです。"Next actions" から再開してください。` |
-| Korean | `가장 최근 *-handoff-*.md 파일을 읽고 "Next actions"부터 이어서 진행해 주세요.` | `이전 세션의 핸드오프입니다. "Next actions"부터 이어서 진행해 주세요.` |
-| Hindi | `सबसे नई *-handoff-*.md फ़ाइल पढ़ो और "Next actions" से आगे बढ़ाओ।` | `यह पिछली सेशन का हैंडऑफ़ है। "Next actions" से आगे बढ़ाओ।` |
+| English | `Read the latest handoffs/*-handoff-*.md file and resume from "Next actions".` | `Here is the handoff from our previous session. Resume from "Next actions".` |
+| Italian | `Leggi il file handoffs/*-handoff-*.md più recente e riparti da "Next actions".` | `Ecco l'handoff della sessione precedente. Riparti da "Next actions".` |
+| French | `Lis le fichier handoffs/*-handoff-*.md le plus récent et reprends à partir de "Next actions".` | `Voici le handoff de la session précédente. Reprends à partir de "Next actions".` |
+| German | `Lies die neueste handoffs/*-handoff-*.md-Datei und mache bei "Next actions" weiter.` | `Hier ist das Handoff aus der vorherigen Session. Mache bei "Next actions" weiter.` |
+| Spanish | `Lee el archivo handoffs/*-handoff-*.md más reciente y retoma desde "Next actions".` | `Aquí tienes el handoff de la sesión anterior. Retoma desde "Next actions".` |
+| Portuguese | `Leia o arquivo handoffs/*-handoff-*.md mais recente e retome a partir de "Next actions".` | `Aqui está o handoff da sessão anterior. Retome a partir de "Next actions".` |
+| Chinese (Simplified) | `读取最新的 handoffs/*-handoff-*.md 文件，并从 "Next actions" 继续。` | `这是上次会话的交接总结，请从 "Next actions" 继续。` |
+| Japanese | `最新の handoffs/*-handoff-*.md を読み込み、"Next actions" から再開してください。` | `前回のセッションのハンドオフです。"Next actions" から再開してください。` |
+| Korean | `가장 최근 handoffs/*-handoff-*.md 파일을 읽고 "Next actions"부터 이어서 진행해 주세요.` | `이전 세션의 핸드오프입니다. "Next actions"부터 이어서 진행해 주세요.` |
+| Hindi | `सबसे नई handoffs/*-handoff-*.md फ़ाइल पढ़ो और "Next actions" से आगे बढ़ाओ।` | `यह पिछली सेशन का हैंडऑफ़ है। "Next actions" से आगे बढ़ाओ।` |
 
 ## Maintainer
 
