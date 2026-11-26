@@ -9,7 +9,7 @@ Built on the [Agent Skills Open Standard](https://agentskills.io/) with capabili
 Agent skill loaders only need `skills/irreplaceable-handoff/SKILL.md`:
 
 ```text
-irreplaceable-handoff/
+Irreplaceable-Handoff/
 ├── README.md
 ├── LICENSE
 ├── .gitignore
@@ -69,7 +69,7 @@ Modern agent runtimes rely on **semantic routing** against the YAML frontmatter 
 ### Quick install (Agent Skills CLI)
 If your environment supports the `skills` CLI (Claude Code, Cursor, Codex, Gemini CLI, etc.):
 ```bash
-npx skills add Undec0de/irreplaceable-handoff
+npx skills add Undec0de/Irreplaceable-Handoff
 ```
 
 ### Local CLI agents
@@ -77,7 +77,7 @@ npx skills add Undec0de/irreplaceable-handoff
 - **Claude Code:** Copy `skills/irreplaceable-handoff/SKILL.md` to `~/.claude/skills/irreplaceable-handoff/SKILL.md` (global) or `.claude/skills/irreplaceable-handoff/SKILL.md` (project-scoped).
 - **Hermes Agent:** Copy `skills/irreplaceable-handoff/SKILL.md` to `~/.hermes/skills/irreplaceable-handoff/SKILL.md` (verify with `hermes skills list`), or install directly from GitHub:
   ```bash
-  hermes skills install https://raw.githubusercontent.com/Undec0de/irreplaceable-handoff/main/skills/irreplaceable-handoff/SKILL.md
+  hermes skills install https://raw.githubusercontent.com/Undec0de/Irreplaceable-Handoff/main/skills/irreplaceable-handoff/SKILL.md
   ```
 - **Codex CLI / OpenClaw:** Copy `skills/irreplaceable-handoff/SKILL.md` to `~/.agents/skills/irreplaceable-handoff/SKILL.md` (or `~/.codex/skills/irreplaceable-handoff/SKILL.md`).
 - **Gemini CLI:** Copy `skills/irreplaceable-handoff/SKILL.md` to `~/.gemini/skills/irreplaceable-handoff/SKILL.md` (or `.gemini/skills/irreplaceable-handoff/SKILL.md`).

@@ -6,7 +6,7 @@ compatibility: Works across any LLM chat or Agent Skills runtime (CLI, IDE, clou
 metadata:
   author: Undec0de
   version: "1.0.1"
-  repository: https://github.com/Undec0de/irreplaceable-handoff
+  repository: https://github.com/Undec0de/Irreplaceable-Handoff
 ---
 
 # Irreplaceable Handoff
