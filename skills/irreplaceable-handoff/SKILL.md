@@ -5,7 +5,7 @@ license: MIT
 compatibility: Works across any LLM chat or Agent Skills runtime (CLI, IDE, cloud, web). No external dependencies, scripts, or network access required; saves a local Markdown file when filesystem write access is available.
 metadata:
   author: Undec0de
-  version: "1.0.1"
+  version: "1.0.2"
   repository: https://github.com/Undec0de/Irreplaceable-Handoff
 ---
 
