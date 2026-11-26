@@ -5,7 +5,7 @@ license: MIT
 compatibility: Works across any LLM chat or Agent Skills runtime (CLI, IDE, cloud, web). No external dependencies, scripts, or network access required; saves a local Markdown file when filesystem write access is available.
 metadata:
   author: Undec0de
-  version: "1.0.0"
+  version: "1.0.1"
   repository: https://github.com/Undec0de/irreplaceable-handoff
 ---
 
@@ -17,12 +17,12 @@ Write for an incoming agent instance that needs to take over immediately, not fo
 
 ## Language rule
 
-Write all prose in the **primary language of the conversation**. Keep file paths, URLs, commands, process/shell IDs, environment variable names, and code identifiers verbatim.
+Write all prose in the **primary language of the conversation**. Keep file paths, URLs, commands, process/shell IDs, environment variable names, and code identifiers verbatim. Keep the output template's structural tokens in English regardless of conversation language: all headings, `[verified]`/`[unconfirmed]`, `"none"`, `Start here`, `Then (ordered)`, and the other field labels.
 
 ## When to invoke
 
 - **Explicit trigger:** Whenever the user asks to wrap up, hand off, or summarize a session before clearing, resetting, or switching context in any language.
-- **Proactive trigger:** Offer or generate a handoff proactively if the user mentions they are about to clear/reset context, switch models or chats, or move to a new topic after a long multi-step session without having created one yet.
+- **Proactive trigger:** Offer a handoff (generate it only once the user agrees) if the user mentions they are about to clear/reset context, switch models or chats, or move to a new topic after a long multi-step session without having created one yet.
 - **Standard vs. Quick mode:** Default to full detail for complex sessions. If the user requests a `"quick handoff"` / `"light handoff"` (or equivalent) for a shorter session, keep every section heading intact for structural stability, but compress each entry to a single terse line and use `"none"` freely.
 
 ## Workflow
@@ -39,7 +39,7 @@ Write all prose in the **primary language of the conversation**. Keep file paths
 4. **Deliver in chat, save dated file (when supported), and print a copy-ready resume line:**
    - Always print the complete handoff in chat.
    - If filesystem write access is available and the user did not ask for chat-only, save the handoff to `YYYY-MM-DD-handoff-<short-slug>.md` inside the current working directory (or a user-specified path).
-   - Build `<short-slug>` from the session title using 2–5 lowercase ASCII words restricted strictly to `[a-z0-9-]` (e.g., `2026-11-25-handoff-auth-refactor.md`). If that exact filename already exists, append `-2`, `-3`, etc. instead of overwriting (unless the user explicitly asks to overwrite a fixed filename).
+   - Build `<short-slug>` from the session title using 2–5 lowercase ASCII words restricted strictly to `[a-z0-9-]`, translating or transliterating non-Latin or accented titles into English/ASCII (e.g., `2026-11-25-handoff-auth-refactor.md`). If that exact filename already exists, append `-2`, `-3`, etc. instead of overwriting (unless the user explicitly asks to overwrite a fixed filename).
    - If no filesystem write access exists, output the handoff in a clean, copy-ready Markdown block (or downloadable artifact using the same naming convention if supported).
    - At the end of your **chat reply only** (not inside the saved file), print the exact saved path (if written) followed by a single copy-ready resume prompt in the conversation's language (e.g., `Read /abs/path/2026-11-25-handoff-auth-refactor.md and resume from "Next actions".`).
 

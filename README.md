@@ -6,7 +6,7 @@ Built on the [Agent Skills Open Standard](https://agentskills.io/) with capabili
 
 ## Repository layout
 
-Keep `README.md` at the repository root—**not** inside the `irreplaceable-handoff/` skill folder—so agent skill loaders only ingest `SKILL.md`:
+Agent skill loaders only need `skills/irreplaceable-handoff/SKILL.md`:
 
 ```text
 irreplaceable-handoff/
@@ -34,7 +34,7 @@ irreplaceable-handoff/
 
 ## Security & trust
 
-- **Zero executable code or external fetches:** This skill consists solely of `SKILL.md` (105 lines) with no bundled scripts and no runtime URL fetches—you can audit the entire file in under two minutes and it passes automated skill scanners cleanly.
+- **Zero executable code or external fetches:** This skill consists solely of `SKILL.md` with no bundled scripts and no runtime URL fetches—you can audit the entire file in under two minutes and it passes automated skill scanners cleanly.
 - **Explicit `Security boundary`:** All security constraints live in a dedicated section inside `SKILL.md` covering read-only inspection, workspace-scoped sanitized `[a-z0-9-]` writes, secret/PII redaction, and indirect prompt-injection defense.
 - **Read-only inspection:** Any state verification during handoff generation is strictly read-only; the skill never stops processes, modifies Git history, or runs destructive commands.
 - **Review shared handoffs:** Always review generated handoffs before sharing or committing them, and inspect any handoff created by someone else before passing it to an agent.
